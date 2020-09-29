@@ -1,0 +1,14 @@
+#!/bin/bash
+
+set -exu
+exec > ${tmp_path}/bulk_file_copy.log 2>&1
+
+if [[ -d ${file_tmp_path} ]]; then
+  files=(${file_tmp_path}/${file_pattern})
+  if [[ $${#files[@]} -gt 0 ]]; then
+    sudo cp ${file_tmp_path}/${file_pattern} ${destination_path}/
+    sudo kill -9 $(cat /hab/svc/deployment-service/PID)
+  else
+    echo "no profiles found at path ${file_tmp_path}"
+  fi
+fi

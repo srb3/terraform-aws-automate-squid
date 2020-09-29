@@ -1,0 +1,17 @@
+#!/bin/bash
+
+set -exu
+exec > ${tmp_path}/bulk_file_copy.log 2>&1
+
+if [[ -d ${file_tmp_path} ]]; then
+  files=(${file_tmp_path}/${file_pattern})
+  if [[ $${#files[@]} -gt 0 ]]; then
+    sudo hab license accept
+    sudo hab pkg exec chef/inspec inspec compliance login https://${ip} -k --user=admin --token=${token} --chef-license=accept
+    for i in $(ls ${file_tmp_path}/${file_pattern}); do
+      sudo hab pkg exec chef/inspec inspec compliance upload $${i} --owner=admin --overwrite
+    done
+  else
+    echo "no profiles found at path ${file_tmp_path}"
+  fi
+fi

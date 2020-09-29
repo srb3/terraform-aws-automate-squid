@@ -1,0 +1,33 @@
+aws_region                        = "eu-west-1"
+aws_profile                       = "default"
+aws_creds_file                    = "" # path to your aws credentials file
+
+automate_ingress_cidrs            = [] # put your home ip in the array # e.g. ["80.2.15.23/32"]
+automate_egress_cidrs             = [] # put your home ip in the array # e.g. ["80.2.15.23/32"] 
+squid_ingress_cidrs               = [] # put your home ip in the array # e.g. ["80.2.15.23/32"]
+
+key_name                          = "" # the aws key to use
+
+squid_ssh_user_private_key        = "" # the ssh private key path to match the aws key
+automate_ssh_user_private_key     = "" # the ssh private key path to match the aws key
+
+automate_instance_type            = "t3.xlarge"
+squid_instance_type               = "t3.medium"
+
+automate_ingest_token             = "token1234"
+automate_admin_password           = "zaq12wsx"
+automate_products                 = ["automate"]
+automate_patching_override_origin = "" # put your hab origin here
+
+automate_license = "" # leave blank or add a legit license
+
+tags = {
+  "X-Dept" = "", # your department
+  "X-Contact" = "", # your email
+  "X-Sleep" = false
+}
+
+automate_config = <<EOF
+[compliance.v1.sys.logger]
+ level = "debug"
+EOF
